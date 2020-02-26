@@ -22,6 +22,9 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation ("org.mariadb.jdbc:mariadb-java-client:2.1.2")
+	implementation ("org.mockito:mockito-core:3.3.0")
+	testImplementation ("junit:junit:4.12")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
