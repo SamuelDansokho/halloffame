@@ -15,6 +15,7 @@ class UserService {
 
     @Transactional(readOnly = true)
     fun getUser( id: Int) : User {
+        System.out.println(userRepository.findById(id))
         return userRepository.findById(id).orElse(null)?:throw NotFoundException("User $id not found")
     }
 

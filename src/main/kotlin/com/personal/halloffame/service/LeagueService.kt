@@ -1,22 +1,24 @@
 package com.personal.halloffame.service
 
+import com.personal.halloffame.model.League
 import com.personal.halloffame.model.Person
+import com.personal.halloffame.repository.LeagueRepository
 import com.personal.halloffame.repository.PersonRepository
+import com.personal.halloffame.repository.UserRepository
 import javassist.NotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class PersonService {
+class LeagueService {
 
     @Autowired
-    private lateinit var personRepository : PersonRepository
+    private lateinit var leagueRepository : LeagueRepository
 
     @Transactional(readOnly = true)
-    fun getPerson( id: Int) : Person {
-        System.out.println(personRepository.findById(id))
-        return personRepository.findById(id).orElse(null)?:throw NotFoundException("Person $id not found")
+    fun getLeague( id: Int) : League {
+        return leagueRepository.findById(id).orElse(null)?:throw NotFoundException("League $id not found")
     }
 
 }
