@@ -18,13 +18,13 @@ class UserController(var userService: UserService){
 
     @PostMapping("/create")
     fun createUser(){
-        val famalam = User(id=10,username = "wagwan",password = "famalam",email = "swag1",isAdmin = true)
+        val famalam = User(username = "wagwan",password = "famalam",email = "swag1",isAdmin = true)
         userService.createUser(famalam)
     }
 
     @GetMapping("/get/{id}")
-    fun getUser(@PathVariable("id") id: Long){
-        userService.getUser(id)
+    fun getUser(@PathVariable("id") id: Int): User{
+        return userService.getUser(id)
     }
 
 }

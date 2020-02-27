@@ -8,7 +8,7 @@ import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
 @Repository
-interface UserRepository: JpaRepository<User, Long>{
- fun getById(id: Long): User?
+interface UserRepository: JpaRepository<User, Int>{
+
  fun save(user: User)
 }

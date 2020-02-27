@@ -14,13 +14,13 @@ class UserService {
     private lateinit var userRepository : UserRepository
 
     @Transactional(readOnly = true)
-    fun getUser( id: Long) : User {
-        return userRepository.findById(id).orElse(null)?: throw NotFoundException("Book $id not found")
+    fun getUser( id: Int) : User {
+        return userRepository.findById(id).orElse(null)?:throw NotFoundException("User $id not found")
     }
 
     @Transactional(readOnly = true)
     fun getAllUser() : List<User> {
-        return userRepository.findAll()?:throw NotFoundException("No user found")
+        return userRepository.findAll()
     }
 
     @Transactional
