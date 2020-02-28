@@ -15,8 +15,14 @@ class UserController(var userService: UserService){
     }
 
     @PostMapping("/create")
-    fun createUser(): UserService.CreationEnum {
-        userService.createUser()
+    fun createUser(
+            @RequestHeader("username") username: String,
+            @RequestHeader("displayname") displayName:String,
+            @RequestHeader("password") password: String,
+            @RequestHeader("email") email: String,
+            @RequestHeader("isAdmin") isAdmin: Boolean
+            ): UserService.CreationEnum {
+        return userService.createUser(username,displayName,password,email,isAdmin)
     }
 
     @GetMapping("/get/{id}")

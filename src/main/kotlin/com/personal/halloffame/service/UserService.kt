@@ -28,9 +28,10 @@ class UserService {
      * Duplicate users in database will be dealt with
      */
     @Transactional
-    fun createUser(user : User): CreationEnum{
-        val check = checkEmailInDB(user.email)
+    fun createUser(username:String,displayname: String, password: String, email: String, isAdmin: Boolean): CreationEnum{
+        val check = checkEmailInDB(email)
         if(!check){
+            val user = User(null,username,password,email,displayname, isAdmin)
             userRepository.save(user)
             return CreationEnum.OK
         } else return CreationEnum.ALREADY_IN_BDD
@@ -42,8 +43,8 @@ class UserService {
      */
     fun checkEmailInDB(email: String): Boolean{
         val users = getAllUser()
-        users.filter { it -> it.email==email }
-        if(users.isNotEmpty()) {
+        val potentialEmails =users.filter { it -> it.email==email }
+        if(potentialEmails.isNotEmpty()) {
             LoggerFactory.getLogger(this::class.java).error("Email already in DB")
             return true
         } else return false
