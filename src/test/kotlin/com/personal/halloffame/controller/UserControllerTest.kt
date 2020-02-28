@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.test.web.client.match.MockRestRequestMatchers.header
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.MvcResult
 import org.springframework.test.web.servlet.ResultMatcher
@@ -64,17 +65,21 @@ class UserControllerTest {
         Assertions.assertThat(result.response.contentAsString).isEqualTo(expected)
     }
 
-//    @ParameterizedTest
-//    @MethodSource("createUserTestSource")
-//    fun createUserTest(case: String, expected: UserService.CreationEnum,status: ResultMatcher){
-//        val enum= if(case=="OK") UserService.CreationEnum.OK else UserService.CreationEnum.ALREADY_IN_BDD
-//        Mockito.doReturn(enum).`when`(userService).createUser(Mockito.any())
-//        val result = mockMvc.perform(MockMvcRequestBuilders.get("/user/create"))
-//                .andExpect(status)
-//                .andReturn()
-//
-//        Assertions.assertThat(result).isEqualTo(expected)
-//    }
+    @ParameterizedTest
+    @MethodSource("createUserTestSource")
+    fun createUserTest(case: String,user:User, status: ResultMatcher){
+        val enum= if(case=="OK") UserService.CreationEnum.OK else UserService.CreationEnum.ALREADY_IN_BDD
+        Mockito.doReturn(enum).`when`(userService).createUser(Mockito.anyString(),Mockito.anyString(),Mockito.anyString(),Mockito.anyString(),Mockito.anyBoolean())
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/create")
+            .header("username",user.username)
+            .header("displayname",user.displayname)
+            .header("password",user.password)
+            .header("email",user.email)
+            .header("isAdmin",user.isAdmin))
+            .andExpect(status)
+
+
+    }
 
     companion object {
         fun generateUser(id: Int): User{
@@ -109,11 +114,11 @@ class UserControllerTest {
         fun createUserTestSource() = listOf(
                 Arguments.of(
                         "OK",
-                        UserService.CreationEnum.OK,
+                        generateUser(1),
                         MockMvcResultMatchers.status().isOk),
                 Arguments.of(
                         "ALREADY",
-                        UserService.CreationEnum.ALREADY_IN_BDD,
+                        generateUser(1),
                         MockMvcResultMatchers.status().isOk)
         )
 
