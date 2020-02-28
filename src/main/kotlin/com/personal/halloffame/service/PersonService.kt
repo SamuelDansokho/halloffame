@@ -15,7 +15,6 @@ class PersonService {
 
     @Transactional(readOnly = true)
     fun getPerson( id: Int) : Person {
-        System.out.println(personRepository.findById(id))
         return personRepository.findById(id).orElse(null)?:throw NotFoundException("Person $id not found")
     }
 

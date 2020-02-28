@@ -3,13 +3,13 @@ package com.personal.halloffame.model
 import javax.persistence.*
 
 @Entity
-@Table(name="user",uniqueConstraints = [UniqueConstraint(columnNames=["username","email","displayname"])])
+@Table(name="user")
 
 data class User(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Int = 0,
-        val username: String? = null,
+        @Column(unique = true) val username: String,
         val password: String? = null,
-        val email: String? = null,
-        val displayname: String? = null,
+        @Column(unique = true) val email: String,
+        @Column(unique = true) val displayname: String? = null,
         val isAdmin: Boolean? = null
 )

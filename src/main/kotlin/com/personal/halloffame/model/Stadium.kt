@@ -3,10 +3,10 @@ package com.personal.halloffame.model
 import javax.persistence.*
 
 @Entity
-@Table(name = "stadium",uniqueConstraints = [UniqueConstraint(columnNames=["name"])])
+@Table(name = "stadium")
 data class Stadium(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Int,
-        val name: String,
+        @Column(unique = true) val name: String,
         @OneToMany val homeTeam: List<Team>,
         val country: String,
         val city: String,

@@ -3,7 +3,7 @@ package com.personal.halloffame.model
 import javax.persistence.*
 
 @Entity
-@Table(name = "person",uniqueConstraints = [UniqueConstraint(columnNames=["firstname","lastname"])])
+@Table(name = "person")
 data class Person(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         private val id: Int,

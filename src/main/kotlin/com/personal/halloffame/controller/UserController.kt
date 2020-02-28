@@ -15,9 +15,8 @@ class UserController(var userService: UserService){
     }
 
     @PostMapping("/create")
-    fun createUser(){
-        val famalam = User(username = "wagwan",password = "famalam",email = "swag1",isAdmin = true)
-        userService.createUser(famalam)
+    fun createUser(): UserService.CreationEnum {
+        userService.createUser()
     }
 
     @GetMapping("/get/{id}")

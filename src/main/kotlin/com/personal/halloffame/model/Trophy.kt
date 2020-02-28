@@ -3,9 +3,9 @@ package com.personal.halloffame.model
 import javax.persistence.*
 
 @Entity
-@Table(name="trophy",uniqueConstraints = [UniqueConstraint(columnNames=["name"])])
+@Table(name="trophy")
 data class Trophy(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Int,
-        val name: String,
+        @Column(unique = true) val name: String,
         @ElementCollection val successHistory: List<Pair<Team,Team>>
 )
