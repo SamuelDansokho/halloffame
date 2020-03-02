@@ -28,7 +28,7 @@ class UserService {
      * Duplicate users in database will be dealt with
      */
     @Transactional
-    fun createUser(username:String,displayname: String, password: String, email: String, isAdmin: Boolean): CreationEnum{
+    fun createUser(username:String,displayname: String?, password: String, email: String, isAdmin: Boolean): CreationEnum{
         val check = checkEmailInDB(email)
         if(!check){
             val user = User(null,username,password,email,displayname, isAdmin)

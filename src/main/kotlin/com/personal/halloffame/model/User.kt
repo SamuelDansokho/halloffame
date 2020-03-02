@@ -8,8 +8,8 @@ import javax.persistence.*
 data class User(
         @Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Int?,
         @Column(unique = true) val username: String,
-        val password: String? = null,
+        val password: String,
         @Column(unique = true) val email: String,
         @Column(unique = true) val displayname: String? = null,
-        val isAdmin: Boolean? = null
+        val isAdmin: Boolean = false
 )
