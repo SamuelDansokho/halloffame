@@ -29,12 +29,16 @@ class UserService {
      */
     @Transactional
     fun createUser(username:String,displayname: String?, password: String, email: String, isAdmin: Boolean): CreationEnum{
-        val check = checkEmailInDB(email)
-        if(!check){
-            val user = User(null,username,password,email,displayname, isAdmin)
-            userRepository.save(user)
-            return CreationEnum.OK
-        } else return CreationEnum.ALREADY_IN_BDD
+        val checkEmail = checkEmailInDB(email)
+        val checkUsername = checkUsernameInDB(username)
+        if(!checkEmail){
+            if (!checkUsername){
+                val user = User(null,username,password,email,displayname, isAdmin)
+                userRepository.save(user)
+                return CreationEnum.OK
+            } else return CreationEnum.USERNAME_ALREADY_IN_BDD
+
+        } else return CreationEnum.MAIL_ALREADY_IN_BDD
 
     }
 
@@ -50,8 +54,21 @@ class UserService {
         } else return false
     }
 
+    /**
+     * Checks if user exists in DB based on username
+     */
+    fun checkUsernameInDB(username: String): Boolean{
+        val users = getAllUser()
+        val potentialUsernames =users.filter { it -> it.username==username }
+        if(potentialUsernames.isNotEmpty()) {
+            LoggerFactory.getLogger(this::class.java).error("Username already in DB")
+            return true
+        } else return false
+    }
+
+
     enum class CreationEnum{
-        OK,ALREADY_IN_BDD,KO
+        OK,MAIL_ALREADY_IN_BDD, USERNAME_ALREADY_IN_BDD,KO
     }
 
 }
