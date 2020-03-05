@@ -5,11 +5,13 @@ import com.personal.halloffame.repository.UserRepository
 import javassist.NotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class UserService {
+class UserService : UserDetailsService {
 
     @Autowired
     private lateinit var userRepository : UserRepository
@@ -17,6 +19,14 @@ class UserService {
     @Transactional(readOnly = true)
     fun getUser( id: Int) : User {
         return userRepository.findById(id).orElse(null)?:throw NotFoundException("User $id not found")
+    }
+
+    @Transactional(readOnly = true)
+    override fun loadUserByUsername(name: String): UserDetails {
+        var uname = userRepository.findByUsername(name)
+        System.out.println("------------------------------------------ SAMUEL DEBUG -------------------------------------------------------")
+        System.out.println(uname)
+        return uname
     }
 
     @Transactional(readOnly = true)

@@ -24,8 +24,8 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation ("org.mariadb.jdbc:mariadb-java-client:2.1.2")
 	implementation ("org.mockito:mockito-core:3.3.0")
-//	implementation ("org.springframework.boot:spring-boot-starter-security")
-//	implementation ("org.springframework.security:spring-security-test")
+	implementation ("org.springframework.boot:spring-boot-starter-security")
+	implementation ("org.springframework.security:spring-security-test")
 	testImplementation ("junit:junit:4.12")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
